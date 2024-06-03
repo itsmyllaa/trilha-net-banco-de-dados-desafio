@@ -151,46 +151,47 @@ INSERT INTO Generos (Genero) VALUES
 ('Guerra');
 
 -- 01
-SELECT NOME,ANO FROM FILMES;
+SELECT Nome, Ano FROM Filmes;
 
 -- 02
-SELECT * FROM Filmes WHERE Ano < 1980;
+SELECT Nome, Ano FROM Filmes ORDER BY Ano ASC;
 
 -- 03
-SELECT * FROM Atores WHERE Genero = 'M';
+SELECT Nome, Ano, Duracao FROM Filmes WHERE Nome = 'De Volta para o Futuro';
 
 -- 04
-SELECT F.* FROM Filmes F
-INNER JOIN FilmesGenero FG ON F.Id = FG.IdFilme
-INNER JOIN Generos G ON FG.IdGenero = G.Id
-WHERE G.Genero = 'Drama';
+SELECT Nome, Ano FROM Filmes WHERE Ano = 1997;
 
 -- 05
-SELECT * FROM Atores WHERE PrimeiroNome LIKE 'J%';
+SELECT Nome, Ano FROM Filmes WHERE Ano > 2000;
 
 -- 06
-SELECT * FROM Filmes WHERE Duracao > 150;
+SELECT Nome, Duracao FROM Filmes WHERE Duracao > 100 AND Duracao < 150 ORDER BY Duracao ASC;
 
 -- 07
-SELECT * FROM Atores WHERE UltimoNome LIKE 'A%n';
+SELECT Ano, COUNT(*) AS Quantidade_Filmes FROM Filmes GROUP BY Ano ORDER BY Quantidade_Filmes DESC;
 
 -- 08
-SELECT F.* FROM Filmes F
-INNER JOIN FilmesGenero FG ON F.Id = FG.IdFilme
-INNER JOIN Generos G ON FG.IdGenero = G.Id
-WHERE G.Genero = 'Aventura' AND F.Ano BETWEEN 1980 AND 2000;
+SELECT PrimeiroNome, UltimoNome FROM Atores WHERE Genero = 'M';
 
 -- 09
-SELECT * FROM Atores WHERE Genero <> 'M';
+SELECT PrimeiroNome, UltimoNome FROM Atores WHERE Genero = 'F' ORDER BY PrimeiroNome;
 
 -- 10
-SELECT * FROM Filmes ORDER BY Nome;
+SELECT Filmes.Nome, Generos.Genero
+FROM Filmes
+INNER JOIN FilmesGenero ON Filmes.Id = FilmesGenero.IdFilme
+INNER JOIN Generos ON FilmesGenero.IdGenero = Generos.Id;
 
 -- 11
-SELECT * FROM Atores ORDER BY UltimoNome;
+SELECT Filmes.Nome, Generos.Genero
+FROM Filmes
+INNER JOIN FilmesGenero ON Filmes.Id = FilmesGenero.IdFilme
+INNER JOIN Generos ON FilmesGenero.IdGenero = Generos.Id
+WHERE Generos.Genero = 'Mistério';
 
 -- 12
-SELECT A.* FROM Atores A
-INNER JOIN ElencoFilme EF ON A.Id = EF.IdAtor
-INNER JOIN Filmes F ON EF.IdFilme = F.Id
-WHERE F.Nome = 'Titanic';
+SELECT Filmes.Nome, Atores.PrimeiroNome, Atores.UltimoNome, ElencoFilme.Papel
+FROM Filmes
+INNER JOIN ElencoFilme ON Filmes.Id = ElencoFilme.IdFilme
+INNER JOIN Atores ON ElencoFilme.IdAtor = Atores.Id;
